@@ -5,7 +5,7 @@ from removePopup import popup
 from NotificationHider import Hider
 import time
 from search import selector
-
+from clickUser import click
 
 page_url = "https://www.instagram.com/"
 login_name = "_shivam_dureja"
@@ -14,7 +14,7 @@ friend = "real._.nature_beauty"
 driver = Loader(page_url)
 driver.maximize_window()
 time.sleep(2)
-LoginUser(driver,login_name,login_password)
+LoginUser(driver, login_name, login_password)
 time.sleep(2)
 submit(driver)
 time.sleep(2)
@@ -22,7 +22,9 @@ popup(driver)
 time.sleep(2)
 
 Hider(driver)
-time.sleep(3)
-
-selector(driver,friend)
 time.sleep(2)
+
+selector(driver, friend)
+time.sleep(4)
+click(driver, friend)
+time.sleep(4)

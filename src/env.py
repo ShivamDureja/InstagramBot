@@ -1,6 +1,6 @@
 #### For main.py ####
 InstaUrl = "https://www.instagram.com/"
-LoginUserName = "_shivam_dureja"
+LoginUserName = "dummy4331"
 LoginUserPass = "Shivam@123"
 friendUserName = "real._.nature_beauty"
 

@@ -1,6 +1,7 @@
+from re import L
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver import Keys, ActionChains
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
@@ -20,13 +21,54 @@ def automateLikes(driver,panelH,panelW):
     mouseMovement(locate,size,panelH,panelW)
     time.sleep(2)
     Posts[0].click()
-    time.sleep(6)
-    try:
-        driver.find_element(by=By.XPATH,value="//button/span[@aria-label='UnLike']")
-    except NoSuchElementException:
-        driver.find_element(by=By.XPATH,value="//button/span[@aria-label='Like']").click()
+    time.sleep(3)
+    # like_pic(driver)
 
-# def like(driver):
-#     likeImg = driver.find_element(by=By.XPATH,value="//button[@type='button']//*[name()='svg' and @aria-label='Like' and @height='24']")
-#     likeImg.click()
+    # try:
+    #     driver.find_element(by=By.XPATH,value="//button[@class='_abl-']//span//*[local-name()='svg'][@aria-label='Unlike']")
+    # except NoSuchElementException:
+    
+    likeImg = driver.find_elements(by=By.XPATH,value="//button[@class='_abl-']/div/span")
+    locateLike = likeImg[1].location
+    likeSize = likeImg[1].size
+    mouseMovement(locateLike,likeSize,panelH,panelW)
+    time.sleep(2)
+    like(driver)
+    # continueLike(driver)
+    while(int(numb_of_post)-1):
+        ActionChains(driver).send_keys(Keys.ARROW_RIGHT)
+        time.sleep(2)
+        like(driver)
+        numb_of_post = numb_of_post-1
+
+
+def like(driver):
+    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[name()='svg' and @aria-label='Like']"))).click()
+
+def next(driver):
+    nextEle = driver.find_element(by=By.XPATH,value="//div[@class=' _aaqg _aaqh']")
+    return nextEle
+
+def continueLike(driver):
+    while(True):
+        next_el = next(driver)
+        if next_el != False:
+ 
+            # click the next button
+            next_el.click()
+            time.sleep(2)
+ 
+            # like the picture
+            like(driver)
+            time.sleep(2)
+        else:
+            print("not found")
+            break
+# def like_pic(driver):
+# 	time.sleep(2)
+# 	like = driver.find_element(by=By.XPATH,value="//button/div")
+# 	soup = BeautifulSoup(like.get_attribute('innerHTML'),'html.parser')
+# 	if(soup.find('svg')['aria-label'] == 'Like'):
+# 		like.click()
+# 	time.sleep(2)
 

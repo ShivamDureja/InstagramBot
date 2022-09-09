@@ -34,12 +34,11 @@ def automateLikes(driver,panelH,panelW):
     mouseMovement(locateLike,likeSize,panelH,panelW)
     time.sleep(2)
     like(driver)
-    # continueLike(driver)
-    while(int(numb_of_post)-1):
-        ActionChains(driver).send_keys(Keys.ARROW_RIGHT)
-        time.sleep(2)
-        like(driver)
-        numb_of_post = numb_of_post-1
+    time.sleep(2)
+    continueLike(driver)
+    close(driver,panelH,panelW)
+    time.sleep(3)
+    driver.close()
 
 
 def like(driver):
@@ -48,27 +47,28 @@ def like(driver):
 def next(driver):
     nextEle = driver.find_element(by=By.XPATH,value="//div[@class=' _aaqg _aaqh']")
     return nextEle
+    
 
+def likeImg(driver):
+    driver.find_element(by=By.XPATH,value="//button//div//span//*[name()='svg' and @aria-label='Like']").click()
 def continueLike(driver):
-    while(True):
-        next_el = next(driver)
-        if next_el != False:
- 
-            # click the next button
-            next_el.click()
-            time.sleep(2)
- 
-            # like the picture
-            like(driver)
-            time.sleep(2)
-        else:
-            print("not found")
+    while True:
+        print("Liking")
+        try:
+            if next(driver).is_displayed():
+                next(driver).click()
+                time.sleep(2)
+                likeImg(driver)
+                time.sleep(2)
+            else:
+                break
+        except NoSuchElementException:
             break
-# def like_pic(driver):
-# 	time.sleep(2)
-# 	like = driver.find_element(by=By.XPATH,value="//button/div")
-# 	soup = BeautifulSoup(like.get_attribute('innerHTML'),'html.parser')
-# 	if(soup.find('svg')['aria-label'] == 'Like'):
-# 		like.click()
-# 	time.sleep(2)
+            
 
+def close(driver,panelH,panelW):
+    closeBtn = driver.find_element(by=By.XPATH,value="//*[name()='svg' and @aria-label='Close']")
+    locateClose = closeBtn.location
+    sizeClose = closeBtn.size
+    mouseMovement(locateClose,sizeClose,panelH,panelW)
+    closeBtn.click()

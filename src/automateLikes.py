@@ -1,11 +1,7 @@
-from re import L
 from selenium.webdriver.common.by import By
-from selenium.webdriver import Keys, ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
-from bs4 import BeautifulSoup
-from humanMimicking import slow_type
 from humanMimicking import mouseMovement
 import time
 from env import *
@@ -22,11 +18,6 @@ def automateLikes(driver,panelH,panelW):
     time.sleep(2)
     Posts[0].click()
     time.sleep(3)
-    # like_pic(driver)
-
-    # try:
-    #     driver.find_element(by=By.XPATH,value="//button[@class='_abl-']//span//*[local-name()='svg'][@aria-label='Unlike']")
-    # except NoSuchElementException:
     
     likeImg = driver.find_elements(by=By.XPATH,value="//button[@class='_abl-']/div/span")
     locateLike = likeImg[1].location
@@ -47,20 +38,19 @@ def like(driver):
 def next(driver):
     nextEle = driver.find_element(by=By.XPATH,value="//div[@class=' _aaqg _aaqh']")
     return nextEle
-    
 
 def likeImg(driver):
     driver.find_element(by=By.XPATH,value="//button//div//span//*[name()='svg' and @aria-label='Like']").click()
+
 def continueLike(driver):
     while True:
-        print("Liking")
+        print("Liked")
         try:
             if next(driver).is_displayed():
                 next(driver).click()
                 time.sleep(2)
                 likeImg(driver)
-                time.sleep(2)
-            else:
+            else: 
                 break
         except NoSuchElementException:
             break
